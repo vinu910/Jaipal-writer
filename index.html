@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Jaipal Lyrics Writer</title>
+  <style>
+    :root {
+      --bg: #f9f9ff;
+      --card: #ffffff;
+      --accent: #e94f6d;
+      --shadow: rgba(0, 0, 0, 0.1);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Poppins", sans-serif;
+      background: var(--bg);
+      color: #111;
+    }
+
+    header {
+      background: linear-gradient(135deg, #ffdee9, #b5fffc);
+      text-align: center;
+      padding: 35px 20px;
+      border-bottom: 3px solid #fff;
+      box-shadow: 0 2px 10px var(--shadow);
+    }
+
+    header h1 {
+      font-size: 34px;
+      margin: 0;
+      color: #111;
+      font-weight: 700;
+    }
+
+    header p.lead {
+      font-size: 16px;
+      color: #444;
+      margin-top: 6px;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 40px auto;
+      padding: 0 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 25px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: 15px;
+      box-shadow: 0 8px 20px var(--shadow);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+
+    .thumb {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      display: block;
+      background: #eee;
+    }
+
+    .meta {
+      padding: 16px;
+      text-align: center;
+    }
+
+    .song-title {
+      font-size: 18px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: #333;
+    }
+
+    .link-row {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    a.btn {
+      display: inline-block;
+      padding: 8px 14px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: 0.3s;
+    }
+
+    a.watch {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    a.watch:hover {
+      background: #c73f58;
+    }
+
+    a.open {
+      background: #f2f4f7;
+      color: #333;
+    }
+
+    a.open:hover {
+      background: #d9d9d9;
+    }
+
+    footer {
+      padding: 20px;
+      text-align: center;
+      color: #666;
+      font-size: 14px;
+      background: #fff;
+      border-top: 1px solid #eee;
+    }
+
+    @media (max-width: 480px) {
+      header h1 {
+        font-size: 26px;
+      }
+      .thumb {
+        height: 150px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎵 Jaipal Dhawan Lyrics Writer 🎵</h1>
+    <p class="lead">Neeche diye gaye gaane — YouTube thumbnail, naam aur link ke sath</p>
+  </header>
+
+  <main class="container">
+    <div id="songs" class="grid" aria-live="polite"></div>
+  </main>
+
+  <footer>
+    © 2025 Jaipal Dhawan Lyrics Writer | All Rights Reserved
+  </footer>
+
+  <script>
+    const songs = [
+      { name: "Khelu Shyam Sang Holi", link: "https://www.youtube.com/watch?v=4dfb3uQkuQI" },
+      { name: "Ek Dafa Tum Mujhe", link: "https://www.youtube.com/watch?v=v50HZm-c1ng" },
+      { name: "Tere Naam Ki Mehendi", link: "https://www.youtube.com/watch?v=MSpt8O4POzM" },
+      { name: "Aisi Gaanth Laga de", link: "https://www.youtube.com/watch?v=0uSoC6icAIw" },
+      { name: "AWADH ME HO GAYA AAGMAN", link: "https://www.youtube.com/watch?v=3-o3xnaQ5rs" }
+    ];
+
+    const container = document.getElementById("songs");
+
+    function extractVideoId(url) {
+      const match = url.match(/v=([^&]+)/);
+      return match ? match[1] : "";
+    }
+
+    function createCard(song) {
+      const card = document.createElement("article");
+      card.className = "card";
+
+      const videoId = extractVideoId(song.link);
+      const thumbnail = `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+
+      const img = document.createElement("img");
+      img.className = "thumb";
+      img.src = thumbnail;
+      img.alt = song.name;
+
+      const meta = document.createElement("div");
+      meta.className = "meta";
+
+      const title = document.createElement("h3");
+      title.className = "song-title";
+      title.textContent = song.name;
+
+      const row = document.createElement("div");
+      row.className = "link-row";
+
+      const watch = document.createElement("a");
+      watch.className = "btn watch";
+      watch.href = song.link;
+      watch.target = "_blank";
+      watch.textContent = "🎬 Watch on YouTube";
+
+      const open = document.createElement("a");
+      open.className = "btn open";
+      open.href = song.link;
+      open.target = "_blank";
+      open.textContent = "🔗 Copy Link";
+
+      row.appendChild(watch);
+      row.appendChild(open);
+      meta.appendChild(title);
+      meta.appendChild(row);
+
+      card.appendChild(img);
+      card.appendChild(meta);
+
+      return card;
+    }
+
+    songs.forEach(s => container.appendChild(createCard(s)));
+  </script>
+</body>
+</html>
